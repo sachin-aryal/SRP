@@ -12,13 +12,21 @@
 <body>
 <div id="userList" class="content scaffold-list" role="main">
 
-<table class="tableDesign">
-    <div class="searchUser">
-    <g:form action="SearchUser">
-        <g:textField name="query" placeholder="KeywordSearch" required=""/>
-        <button>Search</button>
-    </g:form>
+    <div class="exportExcelStudentList">
+        <g:link controller="student" action="exportStudentList">Export to Excel</g:link>
     </div>
+    <div class="importStudent">
+        <g:uploadForm controller="student" action="doUploadNewStudent">
+            <fieldset class="form">
+                <input type="file" name="file" />
+            </fieldset>
+            <fieldset class="uploadStudent">
+                <g:submitButton name="doUpload" value="Upload" />
+            </fieldset>
+        </g:uploadForm>
+    </div>
+<table class="tableDesign">
+
     <g:if test="${flash.message}">
     <div class="userListMessage">
         <p>${flash.message}</p>
@@ -26,6 +34,12 @@
     </g:if>
     <g:if test="${studentInstanceList}">
         <h1 id="tableheader">User List</h1>
+        <div class="searchUser">
+            <g:form action="SearchUser">
+                <g:textField name="query" placeholder="KeywordSearch" required=""/>
+                <button>Search</button>
+            </g:form>
+        </div>
         <thead>
         <tr>
             <g:sortableColumn id="userListHeader" property="id" title="${message(code: 'student.id.label', default: 'Id')}" />
@@ -50,7 +64,7 @@
         <tbody>
         <g:each in="${studentInstanceList}" status="i" var="studentInstance">
             <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                <td id="userData">${i+1}</td>
+                <td id="userData">${studentInstance.id}</td>
 
                 <td id="userData">${fieldValue(bean: studentInstance, field: "rollno")} </td>
 

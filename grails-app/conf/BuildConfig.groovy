@@ -44,11 +44,12 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
 
          runtime 'mysql:mysql-connector-java:5.1.22'
-        compile (group:'org.apache.poi', name:'poi', version:'3.7');
-        //xlxs file support
-        compile (group:'org.apache.poi', name:'poi-ooxml', version:'3.7') {
-            excludes 'xmlbeans'
-        }
+//        compile (group:'org.apache.poi', name:'poi', version:'3.7');
+//        //xlxs file support
+//        compile (group:'org.apache.poi', name:'poi-ooxml', version:'3.7') {
+//            excludes 'xmlbeans'
+//        }
+        runtime 'net.sourceforge.jexcelapi:jxl:2.6.12'
     }
 
     plugins {
@@ -63,8 +64,9 @@ grails.project.dependency.resolution = {
         build ":tomcat:$grailsVersion"
         runtime ":database-migration:1.3.2"
         compile ':cache:1.0.1'
-        compile ":excel-import:1.0.0"
+       //compile ":excel-import:1.0.0"
 
+        //runtime 'net.sourceforge.jexcelapi:jxl:2.6.12'
 
 
     }

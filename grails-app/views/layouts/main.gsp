@@ -65,6 +65,40 @@
         width: 960px;
         margin: 0 auto;
     }
+    .importStudent {
+        background: rgb(230, 230, 250);
+        height: 36px;
+        line-height: 2;
+        font-size: 17px;
+        color: rgb(28, 72, 119);
+        float: right;
+        margin-top: 8px;
+        margin-right: 22px;
+    }
+    .importStudent1 {
+        background: rgb(230, 230, 250);
+        height: 36px;
+        line-height: 2;
+        font-size: 17px;
+        color: rgb(28, 72, 119);
+        float: right;
+        margin-top: 8px;
+        margin-right: 406px;
+    }
+    .exportExcelStudentList {
+        float: right;
+        margin-top: 8px;
+        background: rgb(230, 230, 250);
+        height: 36px;
+        line-height: 2;
+        font-size: 17px;
+        color: rgb(28, 72, 119);
+    }
+    fieldset.uploadStudent {
+        float: right;
+        margin-top: -34px;
+        margin-right: 12px;
+    }
     </style>
     <r:layoutResources />
 

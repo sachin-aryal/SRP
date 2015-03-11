@@ -42,7 +42,7 @@
             <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
                 <td id="userData"><g:link controller="student" action="StudentReport" params="[id:studentInstance.id]">${fieldValue(bean: studentInstance, field: "id")}</g:link></td>
 
-            <td id="userData"><g:link controller="student" action="StudentReport" params="[id:studentInstance.id]">${fieldValue(bean: studentInstance, field: "rollno")}</g:link> </td>
+                <td id="userData"><g:link controller="student" action="StudentReport" params="[id:studentInstance.id]">${fieldValue(bean: studentInstance, field: "rollno")}</g:link> </td>
 
                 <td id="userData"><g:link controller="student" action="StudentReport" params="[id:studentInstance.id]">${fieldValue(bean: studentInstance, field: "name")}</g:link></td>
 
@@ -53,7 +53,7 @@
         %{--${flash.message}--}%
     </table>
     <div class="pagination">
-        <g:paginate next="Next" prev="Back" controller="student" action="StudentProgress"
+        <g:paginate next="Next" prev="Back" controller="student" action="StudentList"
                     total="${studentInstanceTotal}" params="${params}"/>
     </div>
 </div>

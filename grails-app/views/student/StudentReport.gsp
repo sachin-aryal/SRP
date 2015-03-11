@@ -15,7 +15,6 @@
 <body>
 <div class="studentReport">
     <div class="tableDesign">
-
         <table cellpadding="10" cellspacing="10" border="0">
             <thead>
             <tr id="resultTableHeader">
@@ -24,15 +23,18 @@
                 <th>Percentage</th>
             </tr>
             </thead>
-            %{--<tbody>
-            <g:each in="${Percentage}" status="i" var="myVar">
+            <tbody>
+            <g:each in="${Percentage}" status="i" var="percentage">
+                <g:if test="${percentage}">
                 <tr id="resultTableData">
-                    <td>${Semester[i]}</td>
-                    <td>${Examination[i]}</td>
+                    <td>${"Semester"+i}</td>
+                    <td>${"Examination"+i}</td>
                     <td><g:formatNumber number="${Percentage[i]}" format="0.00"/> </td>
                 </tr>
+                </g:if>
             </g:each>
-            </tbody>--}%
+
+            </tbody>
         </table>
     </div>
     <div id="curve_chart" style="width: 960px; height: 500px;">

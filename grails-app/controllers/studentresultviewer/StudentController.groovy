@@ -1,6 +1,12 @@
 package studentresultviewer
 
-import org.grails.plugins.excelimport.StudentExcelImporter
+import jxl.LabelCell
+import jxl.NumberCell
+import jxl.Sheet
+import jxl.Workbook
+import jxl.write.Label
+import jxl.write.WritableSheet
+import jxl.write.WritableWorkbook
 import org.springframework.dao.DataIntegrityViolationException
 
 class StudentController {
@@ -99,7 +105,7 @@ class StudentController {
         params.max = Math.min(max ?: 10, 1000)
         def batch = params.batch
         if (batch.equals("All")) {
-            [studentInstanceList: Student.list(params), studentInstanceTotal: Student.list().size()]
+            [studentInstanceList: Student.list(params).rollno.sort(), studentInstanceTotal: Student.list().size()]
 
         } else {
             [studentInstanceList: Student.findAllByBatch(params.batch, params), studentInstanceTotal: Student.findAllByBatch(params.batch).size()]
@@ -292,27 +298,46 @@ class StudentController {
          Percentage11:percentage11,Percentage12:percentage12,Percentage13:percentage13,Percentage14:percentage14,
          Percentage15:percentage15,Percentage16:percentage16]*/
     }
-
-    def importStudents(fileName, sheetName) {
-
-        def studentDetailsList = []
-        /*if(Batch.findByYear(batch).is(null))
-            new Batch(batch.toInteger()).save()*/
-        StudentExcelImporter importer = new StudentExcelImporter("data/" + fileName);
-        List studentList = importer.getStudents(sheetName);
-
-        for (student in studentList) {
-
-            def stdDetails = new Student()
-            def rollNo = (Integer) student.getAt("Roll No");
-            stdDetails.setRollno(rollNo);
-            stdDetails.setBatch((Integer) student.getAt("Batch"));
-            stdDetails.setName(student.getAt("Name"));
-            stdDetails.setUserName("Username");
-            stdDetails.setPassword("Password");
-            studentDetailsList.add(stdDetails)
+    def doUploadNewStudent() {
+        def file = request.getFile('file')
+        Workbook workbook = Workbook.getWorkbook(file.getInputStream());
+        Sheet sheet = workbook.getSheet(0);
+        // skip first row (row 0) by starting from 1
+        for (int row = 1; row < sheet.getRows(); row++) {
+            LabelCell Name =  sheet.getCell(0, row)
+            NumberCell Rollno = sheet.getCell(1, row)
+            NumberCell Batch =  sheet.getCell(2, row)
+            LabelCell Username = sheet.getCell(3, row)
+            LabelCell Password = sheet.getCell(4, row)
+            new Student(name: Name.string, rollno: Rollno.value, batch: Batch.value, userName: Username.string, password: Password.string).save(flush: true)
         }
+        redirect controller: 'student',action: 'list'
     }
+    def exportStudentList() {
+        response.setContentType('application/vnd.ms-excel')
+        response.setHeader('Content-Disposition', 'Attachment;Filename="StudentList.xls"')
+        WritableWorkbook workbook = Workbook.createWorkbook(response.outputStream)
+        WritableSheet sheet1 = workbook.createSheet("Students", 0)
+        sheet1.addCell(new Label(0, 0, "Name"))
+        sheet1.addCell(new Label(1, 0, "Rollno"))
+        sheet1.addCell(new Label(2, 0, "Batch"))
+        sheet1.addCell(new Label(3, 0, "Username"))
+        sheet1.addCell(new Label(4, 0, "Password"))
+        int i=0;
+        for (int row = 1; row < Student.list().size(); row++) {
+            int columnNumber=0
+            sheet1.addCell(new Label(columnNumber++,row,Student.list()[i].name))
+            sheet1.addCell(new Label(columnNumber++,row,Student.list()[i].rollno.toString()))
+            sheet1.addCell(new Label(columnNumber++,row,Student.list()[i].batch.toString()))
+            sheet1.addCell(new Label(columnNumber++,row,Student.list()[i].userName))
+            sheet1.addCell(new Label(columnNumber,row,Student.list()[i].password))
+            i++;
+        }
+        workbook.write();
+        workbook.close();
+    }
+
+
 
     def auth() {
         if (session.getAttribute("Username") == null) {

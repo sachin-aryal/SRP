@@ -1,5 +1,9 @@
 package studentresultviewer
 
+import jxl.NumberCell
+import jxl.Sheet
+import jxl.Workbook
+
 class ResultController {
     //def beforeInterceptor=[action: this.&auth]
 
@@ -132,6 +136,35 @@ class ResultController {
         }
         render view:'ViewResult'
     }
+    def importResult(){
+        println "Import Result"
+        def subjectExamination = SubjectExamination.findAllBySemesterAndExamination(params.Semester, params.Examination)
+        def file = request.getFile('file')
+        Workbook workbook = Workbook.getWorkbook(file.getInputStream());
+        Sheet sheet = workbook.getSheet(0);
+        // skip first row (row 0) by starting from 1
+        def marks=[]
+        for (int row = 1; row < sheet.getRows(); row++) {
+            /*def marks=[sheet.getColumns()-1]*/
+            for(int column=0;column<sheet.getColumns();column++){
+                NumberCell Rollno=sheet.getCell(column++,row)
+                NumberCell Marks=sheet.getCell(column,row)
+                def resultInstance = new Result()
+                resultInstance.subjectExamination = SubjectExamination.findById(subjectExamination.id[column-1])
+                resultInstance.marks = Marks.value
+                resultInstance.student = Student.findByRollno(Rollno.value)
+                if (!resultInstance.save(flush: true)) {
+                    flash.message = "Oops!! Some Error occurred Try Again"
+                } else {
+                    flash.message = "Result is successfully saved"
+                }
+            }
+
+
+        }
+
+    }
+
 
 /*    all(controller:'*', action:'"\\\\b(?!loginValidator\\\\b)\\\\w+"') {
         before = {
