@@ -142,12 +142,13 @@ class ResultController {
         def file = request.getFile('file')
         Workbook workbook = Workbook.getWorkbook(file.getInputStream());
         Sheet sheet = workbook.getSheet(0);
+        println sheet.getColumns()
         // skip first row (row 0) by starting from 1
-        def marks=[]
         for (int row = 1; row < sheet.getRows(); row++) {
             /*def marks=[sheet.getColumns()-1]*/
-            for(int column=0;column<sheet.getColumns();column++){
-                NumberCell Rollno=sheet.getCell(column++,row)
+            NumberCell Rollno=sheet.getCell(0,row)
+            for(int column=1;column<sheet.getColumns();column++){
+                println "Inside the column loop"
                 NumberCell Marks=sheet.getCell(column,row)
                 def resultInstance = new Result()
                 resultInstance.subjectExamination = SubjectExamination.findById(subjectExamination.id[column-1])

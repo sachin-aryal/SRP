@@ -105,7 +105,7 @@ class StudentController {
         params.max = Math.min(max ?: 10, 1000)
         def batch = params.batch
         if (batch.equals("All")) {
-            [studentInstanceList: Student.list(params).rollno.sort(), studentInstanceTotal: Student.list().size()]
+            [studentInstanceList: Student.list(params), studentInstanceTotal: Student.list().size()]
 
         } else {
             [studentInstanceList: Student.findAllByBatch(params.batch, params), studentInstanceTotal: Student.findAllByBatch(params.batch).size()]

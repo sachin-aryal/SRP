@@ -17,19 +17,20 @@
         ${flash.message}
     </g:if>
         <g:render template="subjectList"/>
-</div>
-<div class="importResult">
-    <g:uploadForm controller="result" action="importResult">
+    <div class="importResult">
+        <g:uploadForm controller="result" action="importResult">
             <fieldset class="form">
                 <input type="file" name="file" />
             </fieldset>
-            <fieldset class="uploadStudent">
+            <fieldset class="uploadResult">
                 <g:submitButton name="doUpload" value="Upload" />
             </fieldset>
-        <g:hiddenField name="Semester" value="${SubjectList.semester.get(0)}"/>
-        <g:hiddenField name="Examination" value="${SubjectList.examination.get(0)}"/>
-    </g:uploadForm>
+            <g:hiddenField name="Semester" value="${SubjectList.semester.get(0)}"/>
+            <g:hiddenField name="Examination" value="${SubjectList.examination.get(0)}"/>
+        </g:uploadForm>
+    </div>
 </div>
+
 
 </body>
 </html>

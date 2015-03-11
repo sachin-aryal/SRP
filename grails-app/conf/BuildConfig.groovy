@@ -32,7 +32,7 @@ grails.project.dependency.resolution = {
 
         mavenLocal()
         mavenCentral()
-
+        //mavenRepo "http://repo.grails.org/grails/core"
         // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
         //mavenRepo "http://snapshots.repository.codehaus.org"
         //mavenRepo "http://repository.codehaus.org"
@@ -50,9 +50,11 @@ grails.project.dependency.resolution = {
 //            excludes 'xmlbeans'
 //        }
         runtime 'net.sourceforge.jexcelapi:jxl:2.6.12'
+
     }
 
     plugins {
+        //compile ":export:1.6"
         runtime ":hibernate:$grailsVersion"
         runtime ":jquery:1.8.3"
         runtime ":resources:1.2"
@@ -65,10 +67,6 @@ grails.project.dependency.resolution = {
         runtime ":database-migration:1.3.2"
         compile ':cache:1.0.1'
        //compile ":excel-import:1.0.0"
-
-        //runtime 'net.sourceforge.jexcelapi:jxl:2.6.12'
-
-
     }
     }
 

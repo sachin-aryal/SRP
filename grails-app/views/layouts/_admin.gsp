@@ -1,4 +1,40 @@
-
+<div id="navbarWrapper">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <div class="row">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#example-navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <g:link class="navbar-brand" controller="hostel" action="index">
+                        <img src="${resource(dir: 'images', file: 'mero-hostel-logo.png')}"/>
+                    </g:link>
+                </div>
+                <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <g:link controller="hostel" action="index"><b>Home</b></g:link>
+                        </li>
+                        <li>
+                            <g:link controller="hostel" action="keyWordSearch"><b>Hostels</b></g:link>
+                        </li>
+                        <li>
+                            <g:link controller="admin" action="aboutUs"><b>About Us</b></g:link>
+                        </li>
+                        <li>
+                            <g:link controller="admin" action="contactUs"><b>Contact Us</b></g:link>
+                        </li>
+                    </ul>
+                </div>
+            </div><!-- row -->
+        </div><!-- container -->
+    </nav>
+</div><!-- navbarWrapper -->
 
 <div id="nav">
     <ul id="navElement">
